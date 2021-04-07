@@ -95,7 +95,7 @@ or (theFocus ="DirectUIHWND1") or  (Edit_Mode = 1))
  
 IME_GET(WinTitle="")
 ;-----------------------------------------------------------
-; “获得 IutMethodEditor 的状态”
+; “获得 Input Method Editors 的状态”
 ;-----------------------------------------------------------
 {
     WinGet,hWnd,ID,%WinTitle%
