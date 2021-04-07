@@ -98,9 +98,9 @@ IME_GET(WinTitle="")
 ; “获得 Input Method Editors 的状态”
 ;-----------------------------------------------------------
 {
+    ifEqual WinTitle,,  SetEnv,WinTitle,A
     WinGet,hWnd,ID,%WinTitle%
     DefaultIMEWnd := DllCall("imm32\ImmGetDefaultIMEWnd", Uint,hWnd, Uint)
- 
     ;Message : WM_IME_CONTROL  wParam:IMC_GETOPENSTATUS
     DetectSave := A_DetectHiddenWindows
     DetectHiddenWindows,ON
