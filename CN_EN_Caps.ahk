@@ -56,8 +56,8 @@ if ( 0 = not_Edit_InFocus())
 }
 return
 
-; 按下Alt键查询当前状态
-~Alt::
+; 按下Ctrl键查询当前状态
+~Ctrl::
 if ( 0 = not_Edit_InFocus())
 {
 	If (IME_GET()=1)
@@ -81,7 +81,7 @@ return
 ~Shift up::
 ~Lbutton up::
 ~CapsLock up::
-~Alt up::
+~Ctrl up::
 Sleep,1500
 ToolTip
 return
