@@ -2,12 +2,19 @@
 ;环境：win10+搜狗输入法，输入法状态切换用默认的shift键。
 ;作者：傲慢与偏见zxc, 837449776@qq.com
 ;时间：20210407
-
+ 
 ; 按下 Shift 键切换输入法
 ; EN-英文, CN-中文, A-Caps On
 CN := chr(20013)
 EN := chr(33521)
-
+ 
+~CapsLock::
+    If GetKeyState("CapsLock","T")
+        ToolTip, Caps_On
+    Else
+        ToolTip, Caps_Off
+return
+ 
 ~Shift::
 ToolTip
 If (IME_GET()=1)
@@ -40,7 +47,7 @@ Else if(A_Cursor = "Arrow")
 MouseGetPos, , , WhichWindow, WhichControl
 WinGetPos,winx,winy,,,%WhichWindow%
 ControlGetPos, x, y, w, h, %WhichControl%, ahk_id %WhichWindow%
-
+ 
 if ( 0 = not_Edit_InFocus())
 {
 	If (IME_GET()=1)
@@ -59,7 +66,7 @@ if ( 0 = not_Edit_InFocus())
     }
 }
 return
-
+ 
 ; 按下Ctrl键查询当前状态
 ~Ctrl::
 if ( 0 = not_Edit_InFocus())
@@ -81,7 +88,7 @@ if ( 0 = not_Edit_InFocus())
 }
 return
  
- ; 默认显示时间1.5s
+ ; 默认显示时间1s
 ~Shift up::
 ~Lbutton up::
 ~CapsLock up::
