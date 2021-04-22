@@ -5,6 +5,14 @@
 
 ; 按下 Shift 键切换输入法
 ; EN-英文, CN-中文, A-Caps On
+ 
+~CapsLock::
+    If GetKeyState("CapsLock","T")
+        ToolTip, Caps_On
+    Else
+        ToolTip, Caps_Off
+return
+
 ~Shift::
 ToolTip
 If (IME_GET()=1)
@@ -26,17 +34,18 @@ return
  ; 鼠标左键按下，且为工形图标，判定为文本输入模式
  ; 显示 Tooltips
 ~LButton::
-If  (A_Cursor = "IBeam" ) 
+If  (A_Cursor = "IBeam") 
 {
-	Edit_Mode := 1
+    Edit_Mode := 1
 } 
-Else if(A_Cursor = "Arrow" ) 
+Else if(A_Cursor = "Arrow") 
 {
-   Edit_Mode := 0
+    Edit_Mode := 0
 } 
 MouseGetPos, , , WhichWindow, WhichControl
 WinGetPos,winx,winy,,,%WhichWindow%
 ControlGetPos, x, y, w, h, %WhichControl%, ahk_id %WhichWindow%
+
 if ( 0 = not_Edit_InFocus())
 {
 	If (IME_GET()=1)
@@ -60,35 +69,38 @@ return
 ~Ctrl::
 if ( 0 = not_Edit_InFocus())
 {
-	If (IME_GET()=1)
-    {       
-        If GetKeyState("CapsLock","T")
-            ToolTip, A
-        Else
-            ToolTip, CN
-    }
-	else
-    {       
-        If GetKeyState("CapsLock","T")
-            ToolTip, A
-        Else
-            ToolTip, EN
-    }
+    If  (A_Cursor = "IBeam") 
+    {
+        If (IME_GET()=1)
+        {       
+            If GetKeyState("CapsLock","T")
+                ToolTip, A
+            Else
+                ToolTip, CN
+        }
+        else
+        {       
+            If GetKeyState("CapsLock","T")
+                ToolTip, A
+            Else
+                ToolTip, EN
+        }
+    }	
 }
 return
  
- ; 默认显示时间1.5s
+ ; 默认显示时间1s
 ~Shift up::
 ~Lbutton up::
 ~CapsLock up::
 ~Ctrl up::
-Sleep,1500
+Sleep,1000
 ToolTip
 return
  
 not_Edit_InFocus(){
 Global Edit_Mode
-ControlGetFocus theFocus, A ; 
+ControlGetFocus theFocus, A
 return  !(inStr(theFocus , "Edit") or  (theFocus = "Scintilla1")
 or (theFocus ="DirectUIHWND1") or  (Edit_Mode = 1))
 }
@@ -101,7 +113,7 @@ IME_GET(WinTitle="")
     ifEqual WinTitle,,  SetEnv,WinTitle,A
     WinGet,hWnd,ID,%WinTitle%
     DefaultIMEWnd := DllCall("imm32\ImmGetDefaultIMEWnd", Uint,hWnd, Uint)
-    ;Message : WM_IME_CONTROL  wParam:IMC_GETOPENSTATUS
+ 
     DetectSave := A_DetectHiddenWindows
     DetectHiddenWindows,ON
     SendMessage 0x283, 0x005,0,,ahk_id %DefaultIMEWnd%
