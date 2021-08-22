@@ -15,7 +15,7 @@ EN := chr(33521)
         ToolTip, Caps_Off
 return
  
-~Shift::
+Shift::
 ToolTip
 If (IME_GET()=1)
 {       
@@ -31,6 +31,8 @@ else
     Else
         ToolTip, % CN
 }
+Sleep,1000
+ToolTip
 return
  
  ; 鼠标左键按下，且为工形图标，判定为文本输入模式
@@ -89,7 +91,6 @@ if ( 0 = not_Edit_InFocus())
 return
  
  ; 默认显示时间1s
-~Shift up::
 ~Lbutton up::
 ~CapsLock up::
 ~Ctrl up::
