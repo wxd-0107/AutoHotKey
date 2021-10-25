@@ -20,14 +20,14 @@ If (IME_GET()=1)
     If GetKeyState("CapsLock","T")
         ToolTip, A
     Else
-        ToolTip, EN
+        ToolTip, CN
 }
 else
 {       
     If GetKeyState("CapsLock","T")
         ToolTip, A
     Else
-        ToolTip, CN
+        ToolTip, EN
 }
 Sleep,1000
 ToolTip
