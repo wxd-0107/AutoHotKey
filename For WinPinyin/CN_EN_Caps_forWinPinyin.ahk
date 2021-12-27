@@ -4,7 +4,6 @@
 ;时间：20211227
 
 ; 按下 Shift 键切换输入法
-; v2版本的autoHotkey用户可以自由设置tooltip显示中文还是英文
 
  DetectHiddenWindows True
 ~CapsLock::
