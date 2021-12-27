@@ -17,8 +17,7 @@
     {
         ToolTip "Caps_Off"
     }  
-    Sleep 1000
-    ToolTip
+    SetTimer () => ToolTip(), -1000
     return
 }
 
@@ -34,13 +33,8 @@ Shift::
 {
     If  (A_Cursor = "IBeam") 
     {
-        Edit_Mode := 1
         mainAction("A", "中", "英")
     } 
-    Else if(A_Cursor = "Arrow") 
-    {
-        Edit_Mode := 0
-    }
     return
 }
 
@@ -73,8 +67,7 @@ mainAction(p_caps, p_status1, p_status2){
         Else
             ToolTip p_status2
     }
-    Sleep 1000
-    ToolTip
+    SetTimer () => ToolTip(), -1000
 }
 
 ; 可以用于判断微软拼音是否是英文模式

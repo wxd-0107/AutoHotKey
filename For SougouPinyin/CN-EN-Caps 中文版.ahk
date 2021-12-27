@@ -9,101 +9,60 @@ CN := chr(20013)
 EN := chr(33521)
  
 ~CapsLock::
+{
     If GetKeyState("CapsLock","T")
         ToolTip, Caps_On
     Else
         ToolTip, Caps_Off
-return
- 
+    SetTimer, RemoveToolTip, -1000
+    return
+}
+
 Shift::
-ToolTip
-If (IME_GET()=1)
-{       
-    If GetKeyState("CapsLock","T")
-        ToolTip, A
-    Else
-        ToolTip, % CN
+{
+    mainAction("A", EN, CN)
+    return
 }
-else
-{       
-    If GetKeyState("CapsLock","T")
-        ToolTip, A
-    Else
-        ToolTip, % EN
-}
-Sleep,1000
-ToolTip
-return
  
  ; 鼠标左键按下，且为工形图标，判定为文本输入模式
- ; 显示 Tooltips
 ~LButton::
-If  (A_Cursor = "IBeam") 
 {
-    Edit_Mode := 1
-} 
-Else if(A_Cursor = "Arrow") 
-{
-    Edit_Mode := 0
-} 
-MouseGetPos, , , WhichWindow, WhichControl
-WinGetPos,winx,winy,,,%WhichWindow%
-ControlGetPos, x, y, w, h, %WhichControl%, ahk_id %WhichWindow%
- 
-if ( 0 = not_Edit_InFocus())
-{
-	If (IME_GET()=1)
-    {       
-        If GetKeyState("CapsLock","T")
-            ToolTip, A
-        Else
-            ToolTip, % CN
-    }
-	else
-    {       
-        If GetKeyState("CapsLock","T")
-            ToolTip, A
-        Else
-            ToolTip, % EN
-    }
+    mainAction("A", CN, EN)
+    return
 }
-return
- 
+
 ; 按下Ctrl键查询当前状态
 ~Ctrl::
-if ( 0 = not_Edit_InFocus())
 {
-	If (IME_GET()=1)
-    {       
-        If GetKeyState("CapsLock","T")
-            ToolTip, A
-        Else
-            ToolTip, % CN
-    }
-	else
-    {       
-        If GetKeyState("CapsLock","T")
-            ToolTip, A
-        Else
-            ToolTip, % EN
-    }
+    mainAction("A", CN, EN)
+    return
 }
-return
- 
- ; 默认显示时间1s
-~Lbutton up::
-~CapsLock up::
-~Ctrl up::
-Sleep,1000
+
+mainAction(p_caps, p_status1, p_status2)
+{
+    If  (A_Cursor = "IBeam") 
+    {
+        If (IME_GET()=1)
+        {       
+            If GetKeyState("CapsLock","T")
+                ToolTip, %p_caps%
+            Else
+                ToolTip, %p_status1%
+        }
+        else
+        {       
+            If GetKeyState("CapsLock","T")
+                ToolTip, %p_caps%
+            Else
+                ToolTip, %p_status2%
+        }
+    }
+    SetTimer, RemoveToolTip, -1000
+}
+
+RemoveToolTip:
 ToolTip
 return
- 
-not_Edit_InFocus(){
-Global Edit_Mode
-ControlGetFocus theFocus, A
-return  !(inStr(theFocus , "Edit") or  (theFocus = "Scintilla1")
-or (theFocus ="DirectUIHWND1") or  (Edit_Mode = 1))
-}
  
 IME_GET(WinTitle="")
 ;-----------------------------------------------------------
