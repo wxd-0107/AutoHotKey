@@ -7,4 +7,7 @@ Displays the current IME state at the cursor position
 20210822
 优化：shift组合键下不再提示输入法状态
 
+20211227
+新增了适用于微软拼音的版本，语法采用的是autohotkey v2版本
+
 
